@@ -1,0 +1,169 @@
+<mat-card class="product-card">
+  <mat-card-title class="product-title">🛒 Manage Products</mat-card-title>
+  <mat-card-content>
+    <table mat-table [dataSource]="productList" class="custom-table mat-elevation-z8">
+
+      <!-- S No Column -->
+      <ng-container matColumnDef="sno">
+        <th mat-header-cell *matHeaderCellDef> # </th>
+        <td mat-cell *matCellDef="let product; let i = index"> {{ i + 1 }} </td>
+      </ng-container>
+
+      <!-- Name -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let product">
+          <span *ngIf="!product.editing">{{ product.name }}</span>
+          <input *ngIf="product.editing" [(ngModel)]="product.name" class="edit-input">
+        </td>
+      </ng-container>
+
+      <!-- Description -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let product">
+          <span *ngIf="!product.editing">{{ product.description }}</span>
+          <textarea *ngIf="product.editing" [(ngModel)]="product.description" class="edit-textarea"></textarea>
+        </td>
+      </ng-container>
+
+      <!-- Price -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> 💰 Price </th>
+        <td mat-cell *matCellDef="let product">
+          <span *ngIf="!product.editing">{{ product.price }}</span>
+          <input *ngIf="product.editing" type="number" [(ngModel)]="product.price" class="edit-input">
+        </td>
+      </ng-container>
+
+      <!-- Discount -->
+      <ng-container matColumnDef="discount">
+        <th mat-header-cell *matHeaderCellDef> 🔖 Discount </th>
+        <td mat-cell *matCellDef="let product">
+          <span *ngIf="!product.editing">{{ product.discount }}%</span>
+          <input *ngIf="product.editing" type="number" [(ngModel)]="product.discount" class="edit-input">
+        </td>
+      </ng-container>
+
+      <!-- Category -->
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef> 📂 Category </th>
+        <td mat-cell *matCellDef="let product">
+          {{ getCategoryName(product.categoryId) }}
+        </td>
+      </ng-container>
+
+      <!-- Brand -->
+      <ng-container matColumnDef="brand">
+        <th mat-header-cell *matHeaderCellDef> 🏷️ Brand </th>
+        <td mat-cell *matCellDef="let product">
+          {{ getBrandName(product.brandId) }}
+        </td>
+      </ng-container>
+
+      <!-- Image -->
+      <ng-container matColumnDef="images">
+        <th mat-header-cell *matHeaderCellDef> 🖼️ Image </th>
+        <td mat-cell *matCellDef="let product">
+          <img *ngIf="product.images.length && !product.editing"
+               [src]="product.images[0]"
+               alt="Product Image"
+               width="50"
+               class="product-thumbnail">
+          <input *ngIf="product.editing"
+                 type="file"
+                 (change)="onEditImageUpload($event, product)"
+                 accept="image/*">
+        </td>
+      </ng-container>
+
+      <!-- Featured -->
+      <ng-container matColumnDef="isFeatured">
+        <th mat-header-cell *matHeaderCellDef> 🌟 Featured </th>
+        <td mat-cell *matCellDef="let product">
+          <mat-checkbox [(ngModel)]="product.isFeatured" [disabled]="!product.editing"></mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- New Product -->
+      <ng-container matColumnDef="isNewProduct">
+        <th mat-header-cell *matHeaderCellDef> 🆕 New </th>
+        <td mat-cell *matCellDef="let product">
+          <mat-checkbox [(ngModel)]="product.isNewProduct" [disabled]="!product.editing"></mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> ⚙️ Actions </th>
+        <td mat-cell *matCellDef="let product; let i = index">
+          <button mat-stroked-button color="accent" (click)="editRow(product)">
+            {{ product.editing ? '💾 Save' : '✏️ Edit' }}
+          </button>
+          <button mat-raised-button color="warn" (click)="deleteRow(product, i)">
+            🗑️ Delete
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div class="add-button-container">
+      <button mat-raised-button color="primary" (click)="openAddForm()">
+        ➕ Add Product
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
+<!-- Add Product Form -->
+<mat-card *ngIf="showAddForm" class="add-product-card">
+  <mat-card-title>Add New Product</mat-card-title>
+  <mat-card-content>
+    <form (ngSubmit)="submitForm()">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="newProduct.name" name="name" required />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="newProduct.description" name="description" required></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Price</mat-label>
+        <input matInput type="number" [(ngModel)]="newProduct.price" name="price" required />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Discount</mat-label>
+        <input matInput type="number" [(ngModel)]="newProduct.discount" name="discount" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="newProduct.categoryId" name="categoryId" required>
+          <mat-option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Brand</mat-label>
+        <mat-select [(ngModel)]="newProduct.brandId" name="brandId" required>
+          <mat-option *ngFor="let brand of brands" [value]="brand._id">{{ brand.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-checkbox [(ngModel)]="newProduct.isFeatured" name="isFeatured">Featured</mat-checkbox>
+      <mat-checkbox [(ngModel)]="newProduct.isNewProduct" name="isNewProduct">New Product</mat-checkbox>
+
+      <input type="file" (change)="onImageUpload($event)" accept="image/*" />
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+        <button mat-raised-button color="warn" (click)="closeForm()">Cancel</button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>

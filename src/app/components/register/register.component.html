@@ -1,0 +1,33 @@
+<div class="register-container">
+  <mat-card class="register-card">
+    <mat-card-title class="register-title">📝 Create Your Account</mat-card-title>
+
+    <mat-card-content>
+      <form (ngSubmit)="registerUser()" #registerForm="ngForm" class="register-form">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>👤 Full Name</mat-label>
+          <input matInput type="text" required [(ngModel)]="user.name" name="name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>📧 Email</mat-label>
+          <input matInput type="email" required [(ngModel)]="user.email" name="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>🔐 Password</mat-label>
+          <input matInput type="password" required [(ngModel)]="user.password" name="password" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" class="full-width register-button" [disabled]="registerForm.invalid">
+          ✅ Register
+        </button>
+      </form>
+
+      <p class="login-link">
+        Already have an account? <a routerLink="/login">🔓 Login here</a>
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,82 @@
+<h2 class="cart-title">🛒 Your Shopping Cart</h2>
+
+<!-- If cart has items -->
+<div *ngIf="cartItems.length > 0; else emptyCart" class="cart-wrapper">
+  <!-- Cart Items Section -->
+  <div class="cart-items">
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <mat-card class="cart-card">
+        <div class="cart-content">
+          <img [src]="item.product.images[0]" alt="{{ item.product.name }}" class="product-image" />
+          <div class="product-details">
+            <h3>{{ item.product.name }}</h3>
+            <p class="brand" *ngIf="item.product.brand">Brand: {{ item.product.brand }}</p>
+            <p>
+              Price:
+              <span class="price">{{ getDiscountedPrice(item.product.price, item.product.discount) | currency }}</span>
+            </p>
+            <p class="original-price" *ngIf="item.product.discount > 0">
+              <s>{{ item.product.price | currency }}</s>
+              <span class="discount-text">-{{ item.product.discount }}%</span>
+            </p>
+
+            <div class="quantity-controls">
+              <button mat-icon-button color="primary" (click)="updateQuantity(item, -1)">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span class="quantity">{{ item.quantity }}</span>
+              <button mat-icon-button color="primary" (click)="updateQuantity(item, 1)">
+                <mat-icon>add</mat-icon>
+              </button>
+              <p class="delivery-estimate">
+                📦 Delivery by <strong>{{ getEstimatedDeliveryDate() }}</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="order-summary">
+    <mat-card class="summary-card">
+      <mat-card-title>🛍 Order Summary</mat-card-title>
+      <mat-card-content>
+      
+        <hr />
+
+      
+
+        <div class="summary-line"><span>Total Items:</span><span>{{ getTotalQuantity() }}</span></div>
+        <div class="summary-line"><span>Total Price:</span><span>{{ getTotalPrice() | currency }}</span></div>
+        <div class="summary-line"><span>Total Discount:</span><span class="discount">-{{ getTotalDiscount() | currency }}</span></div>
+        <div class="summary-line grand-total">
+          <span><strong>Amount Payable:</strong></span>
+          <span><strong>{{ getAmountPayable() | currency }}</strong></span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Place Order Button -->
+    <div class="place-order-container">
+      <button mat-raised-button color="accent" class="place-order-btn" (click)="placeOrder()">
+        ✅ Place Order
+      </button>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="orderPlaced" class="success-message">
+      🎉 Order Placed Successfully! <a routerLink="/orders">View Orders</a>
+    </div>
+  </div>
+</div>
+
+<!-- Empty Cart Template -->
+<ng-template #emptyCart>
+  <div class="empty-cart">
+    <img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png" alt="Empty Cart" class="empty-cart-img" />
+    <p class="empty-message">Your cart is empty. Start shopping now!</p>
+    <button mat-raised-button color="primary" (click)="goToDashboard()">🛍️ Browse Products</button>
+  </div>
+</ng-template>

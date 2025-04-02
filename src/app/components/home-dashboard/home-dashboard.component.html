@@ -1,0 +1,80 @@
+<div class="user-container">
+  <mat-card class="user-card">
+    <mat-card-header class="user-header">
+      <mat-card-title>Hi User</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="user-content">
+      <p class="welcome-text">Welcome to the product page 🎉</p>
+      
+      <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="action-buttons">
+  <button mat-raised-button color="primary" (click)="goToCart()">
+    🛒 Cart
+  </button>
+  <button mat-raised-button color="accent" (click)="goToWishlist()">
+    ❤️ Wishlist
+  </button>
+</div>
+
+<!-- New Products Section -->
+<div class="product-section">
+  <h2 class="section-title">🆕 New Arrivals</h2>
+  <div class="product-grid">
+    <mat-card *ngFor="let product of newProducts" class="product-card" (click)="viewProduct(product)">
+      <img mat-card-image [src]="product.images[0]" alt="{{ product.name }}">
+      <mat-card-content>
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="price">
+          <span class="original-price">{{ product.price | currency }}</span>
+          <span class="discount">-{{ product.discount }}% OFF</span>
+        </p>
+        <p class="final-price">
+          {{ (product.price - (product.price * product.discount / 100)) | currency }}
+        </p>        
+        <div class="rating-row">
+          <span class="rating-box">
+            ★ {{ product.rating }}
+          </span>
+          <span class="buy-count">
+            {{ product.boughtCount }} bought this
+
+          </span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<!-- Featured Products Section -->
+<div class="product-section">
+  <h2 class="section-title">⭐ Featured Products</h2>
+  <div class="product-grid">
+    <mat-card *ngFor="let product of featuredProducts" class="product-card" (click)="viewProduct(product)">
+      <img mat-card-image [src]="product.images[0]" alt="{{ product.name }}">
+      <mat-card-content>
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="price">
+          <span class="original-price">{{ product.price | currency }}</span>
+          <span class="discount">-{{ product.discount }}% OFF</span>
+        </p>
+        <p class="final-price">
+          {{ (product.price - (product.price * product.discount / 100)) | currency }}
+        </p>        
+        <div class="rating-row">
+          <span class="rating-box">
+            ★ {{ product.rating }}
+          </span>
+          <span class="buy-count">
+            {{ product.boughtCount }} bought this
+
+          </span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

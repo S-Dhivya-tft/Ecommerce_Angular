@@ -1,0 +1,88 @@
+.product-card {
+    max-width: 1200px;
+    margin: 40px auto;
+    border-radius: 12px;
+    padding: 20px;
+    background: linear-gradient(to right, #fff3e0, #e1f5fe);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-title {
+    font-size: 1.8rem;
+    color: #1976d2;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .custom-table {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+  
+  .mat-header-row {
+    background-color: #ffe0b2;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .mat-header-cell, .mat-cell {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+  
+  .mat-row:hover {
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+  }
+  
+  .edit-input, .edit-textarea {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  .edit-textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+  
+  .product-thumbnail {
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    margin-top: 4px;
+  }
+  
+  button[mat-stroked-button], button[mat-raised-button] {
+    margin-right: 8px;
+    font-size: 14px;
+  }
+  
+  .add-button-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .add-product-card {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  mat-card-title {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  

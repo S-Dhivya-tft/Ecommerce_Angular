@@ -1,0 +1,38 @@
+<h2 class="page-title">📦 Your Orders</h2>
+
+<div *ngIf="orders.length === 0" class="empty-orders">
+  <p>No orders found. Start shopping now!</p>
+</div>
+
+<div *ngFor="let order of orders" class="order-card">
+  <div class="order-header">
+    <p><strong>Order ID:</strong> {{ order._id }}</p>
+    <p><strong>Status:</strong> <span class="order-status">{{ order.status }}</span></p>
+  </div>
+  
+  <p class="order-date"><strong>Ordered on:</strong> {{ order.date | date:'fullDate' }}</p>
+  <p class="order-payment"><strong>Payment Type:</strong> {{ order.paymentType }}</p>
+
+  <div class="address-section">
+    <p><strong>Delivery Address:</strong></p>
+    <p>{{ order.address.street }}, {{ order.address.city }}, {{ order.address.zip }}</p>
+  </div>
+
+  <div class="order-items">
+    <div *ngFor="let item of order.items" class="product">
+      <img [src]="item.product.images[0]" alt="{{ item.product.name }}" class="product-image" />
+      <div class="product-info">
+        <h3 class="product-name">{{ item.product.name }}</h3>
+        <p class="product-description">{{ item.product.description }}</p>
+        <p class="product-price">
+          <span class="final-price">
+            {{ (item.product.price - (item.product.price * item.product.discount / 100)) | currency }}
+          </span>
+          <span class="original-price">{{ item.product.price | currency }}</span>
+          <span class="discount">-{{ item.product.discount }}% OFF</span>
+        </p>
+        <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+      </div>
+    </div>
+  </div>
+</div>

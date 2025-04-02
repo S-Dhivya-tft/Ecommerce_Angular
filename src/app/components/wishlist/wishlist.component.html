@@ -1,0 +1,39 @@
+<h2 class="wishlist-title">Your Wishlist</h2>
+
+<div *ngIf="wishlistItems.length; else emptyWishlist">
+  <div *ngFor="let item of wishlistItems" class="wishlist-item">
+    <mat-card class="wishlist-card">
+      <div class="wishlist-content">
+        <img [src]="item.images[0]" alt="{{ item.name }}" class="product-image" />
+
+        <div class="product-details">
+          <h3>{{ item.name }}</h3>
+          <p class="price">
+            <span class="original-price">{{ item.price | currency }}</span>
+            <span class="discount">-{{ item.discount }}% OFF</span>
+          </p>
+          <p class="final-price">
+            {{ (item.price - (item.price * item.discount / 100)) | currency }}
+          </p>        
+
+          <div class="wishlist-actions">
+            <button mat-raised-button color="primary" (click)="addToCart(item)">
+              Add to Cart
+            </button>
+
+            <button mat-raised-button color="warn" (click)="removeFromWishlist(item._id)">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #emptyWishlist>
+  <div class="empty-wishlist">
+    <p class="empty-message">❤️ Your wishlist is empty.</p>
+    <button mat-raised-button color="accent" (click)="goToDashboard()">🛍️ Browse Products</button>
+  </div>
+</ng-template>

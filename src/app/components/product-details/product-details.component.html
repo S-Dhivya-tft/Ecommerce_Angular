@@ -1,0 +1,28 @@
+<div *ngIf="product" class="product-details-container">
+    <mat-card class="product-card">
+      <div class="product-layout">
+        <img [src]="product.images[0]" alt="{{ product.name }}" class="product-image" />
+  
+        <div class="product-info">
+          <h2 class="product-title">{{ product.name }}</h2>
+          <p><strong>ID:</strong> {{ product._id }}</p>
+          <p><strong>Short Description:</strong> {{ product.shortDescription }}</p>
+          <p><strong>Description:</strong> {{ product.description }}</p>
+          <p class="product-price"><strong>Price:</strong> {{ product.price | currency }}</p>
+          <p class="product-discount"><strong>Discount:</strong> {{ product.discount }}%</p>
+          <p><strong>Category:</strong> {{ product.categoryId }}</p>
+          <p><strong>Brand:</strong> {{ product.brandId }}</p>
+  
+          <div class="product-actions">
+            <button mat-raised-button color="primary" (click)="addToCart()">
+              <mat-icon>shopping_cart</mat-icon> Add to Cart
+            </button>
+            <button mat-raised-button color="accent" (click)="addToWishlist()">
+              <mat-icon>favorite_border</mat-icon> Wishlist
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  

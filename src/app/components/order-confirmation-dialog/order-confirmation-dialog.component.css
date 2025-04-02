@@ -1,0 +1,38 @@
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .section-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .payment-icon {
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+  
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  mat-icon {
+    vertical-align: middle;
+  }
+  
