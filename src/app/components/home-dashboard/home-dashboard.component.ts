@@ -42,7 +42,7 @@ export class HomeDashboardComponent implements OnInit {
             boughtCount: Math.floor(Math.random() * 900 + 100)
           }));
         },
-        error: (error) => console.error('Error fetching new products:', error),
+        error: (error) => console.error('Error on fetching new products:', error),
       });
   }
   
